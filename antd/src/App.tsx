@@ -1,17 +1,21 @@
 import { Form, Input, Button, Layout, Select, DatePicker } from "antd";
 import { Header, Content, Footer } from "antd/lib/layout/layout";
-import moment from "moment";
 import { Fragment } from "react";
 
 import "./App.css";
-import { BuildFactors, EmployeeTitle, UserInfo } from "./models/UserInfo";
+import { BuildFactors, EmployeeTitle, UserInfo } from "./models";
 
 const { Option } = Select;
 
+const initValue = new UserInfo({employee: "Sang"});
 export const App = () => {
   const [form] = Form.useForm<UserInfo>();
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    const data = form.getFieldsValue();
+    const userInfo = new UserInfo(data);
+    userInfo.CalcSalary();
+    form.setFieldsValue({salary: userInfo.salary});
+    console.log(`${userInfo.employee} 本月应发 ${userInfo.salary}`);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -23,13 +27,13 @@ export const App = () => {
   return (
     <>
       <Layout>
-        <Header>Header</Header>
+        <Header color="red">工资计算器</Header>
         <Content>
           <Form
             form={form}
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 8 }}
-            initialValues={{ employee: "Sang", date: moment() }}
+            initialValues={initValue}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
@@ -85,7 +89,7 @@ export const App = () => {
                         labelCol={{span: 4}}
                         wrapperCol={{span: 8}}
                       >
-                        <Input suffix={form.getFieldValue('factors')[index].unit} />
+                        <Input suffix={form.getFieldValue('factors')[index].unit} autoComplete="off" />
                       </Form.Item>
                     </Fragment>
                   ))}
