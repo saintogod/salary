@@ -23,22 +23,65 @@ export function GetCourseSalary(user: UserInfo): number {
   const { title, factors } = user;
   if (title === EmployeeTitle.Salesman) return 0;
 
-  if (title === EmployeeTitle.FullTime)
+  if (title === EmployeeTitle.FullTime) {
     return CalcFullCourseSalary(
       factors
         .filter((f) => f.category === "Course")
         .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0)
     );
-
-  if (title === EmployeeTitle.HalfTime)
+  }
+  if (title === EmployeeTitle.HalfTime) {
     return CalcHalfTimeCourseSalary(
       factors
         .filter((f) => f.category === "Course")
         .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0)
     );
+  }
+  if (title === EmployeeTitle.Director) {
+    return CalcDirectorCourseSalary(factors);
+  }
   return factors
     .filter((f) => f.category === "Course")
     .reduce((prev, cur) => prev + cur.GetEarned(user), 0);
+}
+
+function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
+  let total = 0;
+  let rest = 20;
+
+  //团课
+  let factor = factors.find(f => f.id === "GroupCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      total += (factor.value - rest) * 70;
+      rest = 0;
+    } else {
+      rest -= factor.value;
+    }
+  }
+
+  // 小班
+  factor = factors.find(f => f.id === "SmallCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      total += (factor.value - rest) * 80;
+      rest = 0;
+    } else {
+      rest -= factor.value;
+    }
+  }
+
+  // 私教
+  factor = factors.find(f => f.id === "PrivateCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      total += (factor.value - rest) * 90;
+      rest = 0;
+    } else {
+      rest -= factor.value;
+    }
+  }
+  return total;
 }
 
 function CalcFullCourseSalary(course: number) {

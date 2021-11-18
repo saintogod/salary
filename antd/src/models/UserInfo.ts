@@ -22,11 +22,11 @@ export enum EmployeeTitle {
    */
   PartTime = "PartTime",
   /**
-   * 销售
+   * 销售人员
    */
   Salesman = "Salesman",
   /**
-   * 文员
+   * 文职人员
    */
   Civilian = "Civilian",
 }

@@ -7,7 +7,7 @@ export interface SalaryFactor {
   readonly id: string;
   readonly label: string;
   readonly unit: string;
-  readonly category: "Course" | "EduCourse" | "Positive" | "Negative";
+  readonly category: "Course" | "EduCourse" | "Positive" | "Negative" | "Sales";
   value: number;
   GetEarned(userInfo: UserInfo): number;
 }
@@ -21,7 +21,7 @@ export class TotalSales implements SalaryFactor {
   public readonly id = "TotalSales";
   public readonly label: string = "业绩";
   public readonly unit = "元";
-  public readonly category = "Course";
+  public readonly category = "Sales";
 
   public value: number;
 
@@ -50,7 +50,7 @@ export class PerformanceA implements SalaryFactor {
   public readonly id = "PerformanceA";
   public readonly label: string = "业绩A";
   public readonly unit = "元";
-  public readonly category = "Course";
+  public readonly category = "Sales";
 
   public value: number;
 
@@ -76,8 +76,7 @@ export class PerformanceB implements SalaryFactor {
   public readonly id = "PerformanceB";
   public readonly label: string = "业绩B";
   public readonly unit = "元";
-
-  public readonly category = "Course";
+  public readonly category = "Sales";
 
   public value: number;
 
@@ -103,7 +102,7 @@ export class CourseCommission implements SalaryFactor {
   public readonly id = "CourseCommission";
   public readonly label: string = "课程提成";
   public readonly unit = "节";
-  public readonly category = "Course";
+  public readonly category = "Sales";
 
   public value: number;
 
@@ -331,7 +330,7 @@ export class OnDuty implements SalaryFactor {
 export class SickLeave implements SalaryFactor {
   public readonly id = "SickLeave";
   public readonly label: string = "病假";
-  public readonly unit = "次";
+  public readonly unit = "天";
   public readonly category = "Negative";
 
   public value: number;
@@ -361,7 +360,7 @@ export class SickLeave implements SalaryFactor {
 export class CompassionateLeave implements SalaryFactor {
   public readonly id = "CompassionateLeave";
   public readonly label: string = "事假";
-  public readonly unit = "次";
+  public readonly unit = "天";
   public readonly category = "Negative";
 
   public value: number;
@@ -389,7 +388,7 @@ export class CompassionateLeave implements SalaryFactor {
 export class LateForWork implements SalaryFactor {
   public readonly id = "LateForWork";
   public readonly label: string = "迟到";
-  public readonly unit = "次";
+  public readonly unit = "小时";
   public readonly category = "Negative";
 
   public value: number;
