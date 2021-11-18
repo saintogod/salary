@@ -54,6 +54,7 @@ export class UserInfo {
     const courseSalary = GetCourseSalary(this);
 
     this.salary =
+      BaseSalary[this.title] +
       courseSalary +
       this.factors
         .filter((f) => f.category !== "Course")

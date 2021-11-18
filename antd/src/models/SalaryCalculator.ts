@@ -1,3 +1,4 @@
+import { BaseCourse } from ".";
 import {
   Absenteeism,
   CompassionateLeave,
@@ -50,7 +51,7 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   let rest = 20;
 
   //团课
-  let factor = factors.find(f => f.id === "GroupCourse")!;
+  let factor = factors.find((f) => f.id === "GroupCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
       total += (factor.value - rest) * 70;
@@ -61,7 +62,7 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   }
 
   // 小班
-  factor = factors.find(f => f.id === "SmallCourse")!;
+  factor = factors.find((f) => f.id === "SmallCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
       total += (factor.value - rest) * 80;
@@ -72,7 +73,7 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   }
 
   // 私教
-  factor = factors.find(f => f.id === "PrivateCourse")!;
+  factor = factors.find((f) => f.id === "PrivateCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
       total += (factor.value - rest) * 90;
@@ -85,39 +86,24 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
 }
 
 function CalcFullCourseSalary(course: number) {
-  if (course > 100)
-    return (
-      (course - 100) * 120 + 20 * 100 + 20 * 90 + 20 * 80 + 10 * 70 + 10 * 60
-    );
-  if (course > 80)
-    return (course - 80) * 100 + 20 * 90 + 20 * 80 + 10 * 70 + 10 * 60;
-  if (course > 60) return (course - 60) * 90 + 20 * 80 + 10 * 70 + 10 * 60;
-  if (course > 40) return (course - 40) * 80 + 10 * 70 + 10 * 60;
-  if (course > 30) return (course - 30) * 70 + 10 * 60;
-  if (course > 20) return (course - 30) * 60;
+  const exCourse = course - BaseCourse[EmployeeTitle.FullTime];
+  if (course > 100) return exCourse * 120;
+  if (course > 80) return exCourse * 100;
+  if (course > 60) return exCourse * 90;
+  if (course > 40) return exCourse * 80;
+  if (course > 30) return exCourse * 70;
+  if (course > 20) return exCourse * 60;
   return 0;
 }
 
 function CalcHalfTimeCourseSalary(course: number): number {
-  if (course > 100)
-    return (
-      (course - 100) * 120 +
-      20 * 100 +
-      20 * 90 +
-      10 * 80 +
-      10 * 70 +
-      10 * 60 +
-      30 * 100
-    );
-  if (course > 80)
-    return (
-      (course - 80) * 100 + 20 * 90 + 10 * 80 + 10 * 70 + 10 * 60 + 30 * 100
-    );
-  if (course > 60)
-    return (course - 60) * 90 + 10 * 80 + 10 * 70 + 10 * 60 + 30 * 100;
-  if (course > 50) return (course - 50) * 80 + 10 * 70 + 10 * 60 + 30 * 100;
-  if (course > 40) return (course - 40) * 70 + 10 * 60 + 30 * 100;
-  if (course > 30) return (course - 30) * 60 + 30 * 100;
+  const exCourse = course - BaseCourse[EmployeeTitle.FullTime];
+  if (course > 100) return exCourse * 120 + 30 * 100;
+  if (course > 80) return exCourse * 100 + 30 * 100;
+  if (course > 60) return exCourse * 90 + 30 * 100;
+  if (course > 50)  return exCourse * 80 + 30 * 100;
+  if (course > 40)  return exCourse * 70 + 30 * 100;
+  if (course > 30)  return exCourse * 60 + 30 * 100;
   return course * 100;
 }
 

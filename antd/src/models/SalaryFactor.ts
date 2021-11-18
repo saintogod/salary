@@ -35,7 +35,7 @@ export class TotalSales implements SalaryFactor {
   public GetEarned({ title }: UserInfo): number {
     if (title !== EmployeeTitle.Salesman) return 0;
     if (this.value > 50000) {
-      return 2000 + this.value * 0.005;
+      return 2000 + this.value * 0.05;
     }
     return 0;
   }
@@ -63,7 +63,7 @@ export class PerformanceA implements SalaryFactor {
 
   public GetEarned({ title }: UserInfo): number {
     if (title === EmployeeTitle.Salesman) return 0;
-    return this.value * 0.002;
+    return this.value * 0.02;
   }
 }
 
@@ -89,7 +89,7 @@ export class PerformanceB implements SalaryFactor {
 
   public GetEarned({ title }: UserInfo): number {
     if (title === EmployeeTitle.Salesman) return 0;
-    return this.value * 0.005;
+    return this.value * 0.05;
   }
 }
 

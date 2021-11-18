@@ -63,10 +63,6 @@ export const App = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="实发薪资" name="salary">
-            <Input placeholder="实发薪资" readOnly />
-          </Form.Item>
-
           <Form.List name="factors">
             {(factors) => (
               <>
@@ -94,6 +90,11 @@ export const App = () => {
               计算
             </Button>
           </Form.Item>
+
+          <Form.Item label="实发薪资" name="salary">
+            <Input placeholder="实发薪资" readOnly />
+          </Form.Item>
+
         </Form>
       </main>
     </>
