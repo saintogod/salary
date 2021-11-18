@@ -101,9 +101,9 @@ function CalcHalfTimeCourseSalary(course: number): number {
   if (course > 100) return exCourse * 120 + 30 * 100;
   if (course > 80) return exCourse * 100 + 30 * 100;
   if (course > 60) return exCourse * 90 + 30 * 100;
-  if (course > 50)  return exCourse * 80 + 30 * 100;
-  if (course > 40)  return exCourse * 70 + 30 * 100;
-  if (course > 30)  return exCourse * 60 + 30 * 100;
+  if (course > 50) return exCourse * 80 + 30 * 100;
+  if (course > 40) return exCourse * 70 + 30 * 100;
+  if (course > 30) return exCourse * 60 + 30 * 100;
   return course * 100;
 }
 

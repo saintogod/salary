@@ -38,11 +38,13 @@ export class UserInfo {
   public salary: number = 0;
   public factors: SalaryFactor[] = [];
 
-  constructor({factors, ...data}: Partial<UserInfo>) {
+  constructor({ factors, ...data }: Partial<UserInfo>) {
     if (data !== undefined) {
       Object.assign(this, data);
       if (factors) {
-        this.factors = factors.map(f => CreateFactorInstance(f.id, f.value)!).filter(f => f !== null);
+        this.factors = factors
+          .map((f) => CreateFactorInstance(f.id, f.value)!)
+          .filter((f) => f !== null);
       }
     }
     if (this.factors.length === 0) {
@@ -53,15 +55,15 @@ export class UserInfo {
   public CalcSalary(): void {
     const courseSalary = GetCourseSalary(this);
 
-    this.salary =
-      BaseSalary[this.title] +
-      courseSalary +
-      this.factors
-        .filter((f) => f.category !== "Course")
-        .reduce((prev, cur) => prev + cur.GetEarned(this), 0);
+    this.salary = courseSalary;
+    if (this.title !== EmployeeTitle.HalfTime || this.salary >= 3000) {
+      this.salary += BaseSalary[this.title];
+    }
+    this.salary += this.factors
+      .filter((f) => f.category !== "Course")
+      .reduce((prev, cur) => prev + cur.GetEarned(this), 0);
   }
 }
-
 
 export const BaseSalary: { [key: string]: number } = {
   Director: 4000.0,

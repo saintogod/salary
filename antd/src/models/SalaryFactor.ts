@@ -26,16 +26,14 @@ export class TotalSales implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
     if (title !== EmployeeTitle.Salesman) return 0;
     if (this.value >= 50000) {
-      return BaseSalary[title] + this.value * 0.05;
+      return 2000 + this.value * 0.05;
     }
     return 0;
   }
@@ -55,10 +53,8 @@ export class PerformanceA implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -81,10 +77,8 @@ export class PerformanceB implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -107,10 +101,8 @@ export class CourseCommission implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -135,10 +127,8 @@ export class GroupCourse implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -169,10 +159,8 @@ export class SmallCourse implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -203,10 +191,8 @@ export class PrivateCourse implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -238,10 +224,8 @@ export class EduTrainCourse implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -263,10 +247,8 @@ export class LearningSubsidy implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned(userInfo: UserInfo): number {
@@ -286,10 +268,8 @@ export class OtherSubsidy implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned(userInfo: UserInfo): number {
@@ -311,10 +291,8 @@ export class OnDuty implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -336,10 +314,8 @@ export class SickLeave implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -366,10 +342,8 @@ export class CompassionateLeave implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -394,10 +368,8 @@ export class LateForWork implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -422,10 +394,8 @@ export class Absenteeism implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -450,10 +420,8 @@ export class OtherDeduction implements SalaryFactor {
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof(value) === 'string')
-      this.value = parseInt(value, 10);
-    else
-      this.value = value;
+    if (typeof value === "string") this.value = parseInt(value, 10);
+    else this.value = value;
   }
 
   public GetEarned({ title }: UserInfo): number {
@@ -462,13 +430,12 @@ export class OtherDeduction implements SalaryFactor {
   }
 }
 
-
 export function CreateFactorInstance(
   factorId: string,
   value: number
 ): SalaryFactor | null {
   switch (factorId) {
-    case "Performance":
+    case "TotalSales":
       return new TotalSales(value);
     case "PerformanceA":
       return new PerformanceA(value);
