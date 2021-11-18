@@ -34,8 +34,8 @@ export class TotalSales implements SalaryFactor {
 
   public GetEarned({ title }: UserInfo): number {
     if (title !== EmployeeTitle.Salesman) return 0;
-    if (this.value > 50000) {
-      return 2000 + this.value * 0.05;
+    if (this.value >= 50000) {
+      return BaseSalary[title] + this.value * 0.05;
     }
     return 0;
   }
