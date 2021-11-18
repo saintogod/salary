@@ -97,7 +97,7 @@ function CalcFullCourseSalary(course: number) {
 }
 
 function CalcHalfTimeCourseSalary(course: number): number {
-  const exCourse = course - BaseCourse[EmployeeTitle.FullTime];
+  const exCourse = course - BaseCourse[EmployeeTitle.HalfTime];
   if (course > 100) return exCourse * 120 + 30 * 100;
   if (course > 80) return exCourse * 100 + 30 * 100;
   if (course > 60) return exCourse * 90 + 30 * 100;
