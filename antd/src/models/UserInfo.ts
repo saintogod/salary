@@ -35,7 +35,7 @@ export class UserInfo {
   public employee: string = "";
   public title: EmployeeTitle = EmployeeTitle.FullTime;
   public date: moment.Moment = moment();
-  public salary: number = 0;
+  public salary: string = "0.00";
   public factors: SalaryFactor[] = [];
 
   constructor({ factors, ...data }: Partial<UserInfo>) {
@@ -55,13 +55,18 @@ export class UserInfo {
   public CalcSalary(): void {
     const courseSalary = GetCourseSalary(this);
 
-    this.salary = courseSalary;
-    if (this.title !== EmployeeTitle.HalfTime || this.salary >= 3000) {
-      this.salary += BaseSalary[this.title];
+    let salary = courseSalary;
+    if (this.title !== EmployeeTitle.HalfTime || salary >= 3000) {
+      salary += BaseSalary[this.title];
     }
-    this.salary += this.factors
+    salary += this.factors
       .filter((f) => f.category !== "Course")
-      .reduce((prev, cur) => prev + cur.GetEarned(this), 0);
+      .reduce((prev, cur) => {
+        const earned = cur.GetEarned(this);
+        cur.earned = earned.toFixed(2);
+        return prev + earned;
+      }, 0);
+    this.salary = salary.toFixed(2);
   }
 }
 

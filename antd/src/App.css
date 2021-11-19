@@ -1,4 +1,41 @@
 main {
   padding: 1rem;
-  margin: 1rem;
+}
+
+.ant-form-inline .ant-form-item {
+  margin-bottom: .5rem;
+}
+
+.base-info {
+  display: flex;
+  width: 100%;
+    justify-content: space-between;
+}
+.ant-row.ant-form-item.base-date {
+  margin-right: .25rem;
+}
+.factor-item {
+  display: flex;
+}
+
+.ant-row.ant-form-item.factor-input {
+  flex: 1 1 !important;
+}
+.ant-row.ant-form-item.factor-output {
+  flex: 0 0 6.25rem !important;
+  margin-right: .25rem;
+}
+.factor-output .ant-input {
+  text-align: right;
+}
+
+.ant-row.ant-form-item.final-salary {
+  margin-right: .25rem;
+  width: 100%;
+}
+#salary {
+  background-color: green;
+  color: yellow;
+  font-weight: 600;
+  font-size: 1.25rem;
 }

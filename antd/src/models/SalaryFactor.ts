@@ -9,6 +9,7 @@ export interface SalaryFactor {
   readonly unit: string;
   readonly category: "Course" | "EduCourse" | "Positive" | "Negative" | "Sales";
   value: number;
+  earned: string;
   GetEarned(userInfo: UserInfo): number;
 }
 
@@ -23,6 +24,7 @@ export class TotalSales implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Sales";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -50,6 +52,7 @@ export class PerformanceA implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Sales";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -74,6 +77,7 @@ export class PerformanceB implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Sales";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -98,6 +102,7 @@ export class CourseCommission implements SalaryFactor {
   public readonly unit = "节";
   public readonly category = "Sales";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -124,6 +129,7 @@ export class GroupCourse implements SalaryFactor {
   public readonly unit = "节";
   public readonly category = "Course";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -156,6 +162,7 @@ export class SmallCourse implements SalaryFactor {
   public readonly unit = "节";
   public readonly category = "Course";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -188,6 +195,7 @@ export class PrivateCourse implements SalaryFactor {
   public readonly unit = "节";
   public readonly category = "Course";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -221,6 +229,7 @@ export class EduTrainCourse implements SalaryFactor {
   public readonly unit = "小时";
   public readonly category = "EduCourse";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -244,6 +253,7 @@ export class LearningSubsidy implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Positive";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -265,6 +275,7 @@ export class OtherSubsidy implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Positive";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -288,6 +299,7 @@ export class OnDuty implements SalaryFactor {
   public readonly unit = "天";
   public readonly category = "Positive";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -311,6 +323,7 @@ export class SickLeave implements SalaryFactor {
   public readonly unit = "天";
   public readonly category = "Negative";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -339,6 +352,7 @@ export class CompassionateLeave implements SalaryFactor {
   public readonly unit = "天";
   public readonly category = "Negative";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -365,6 +379,7 @@ export class LateForWork implements SalaryFactor {
   public readonly unit = "小时";
   public readonly category = "Negative";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -391,6 +406,7 @@ export class Absenteeism implements SalaryFactor {
   public readonly unit = "次";
   public readonly category = "Negative";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -417,6 +433,7 @@ export class OtherDeduction implements SalaryFactor {
   public readonly unit = "元";
   public readonly category = "Negative";
 
+  public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
@@ -434,6 +451,14 @@ export function CreateFactorInstance(
   factorId: string,
   value: number
 ): SalaryFactor | null {
+  if (typeof value === 'string') {
+    value = parseInt(value, 10);
+  }
+  if (isNaN(value)) {
+    value = 0;
+  } else if (value <= 0) {
+    value = 0;
+  }
   switch (factorId) {
     case "TotalSales":
       return new TotalSales(value);

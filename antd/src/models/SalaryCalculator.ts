@@ -28,14 +28,12 @@ export function GetCourseSalary(user: UserInfo): number {
     return CalcFullCourseSalary(
       factors
         .filter((f) => f.category === "Course")
-        .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0)
     );
   }
   if (title === EmployeeTitle.HalfTime) {
     return CalcHalfTimeCourseSalary(
       factors
         .filter((f) => f.category === "Course")
-        .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0)
     );
   }
   if (title === EmployeeTitle.Director) {
@@ -43,12 +41,16 @@ export function GetCourseSalary(user: UserInfo): number {
   }
   return factors
     .filter((f) => f.category === "Course")
-    .reduce((prev, cur) => prev + cur.GetEarned(user), 0);
+    .reduce((prev, cur) => {
+      const earned = cur.GetEarned(user);
+      cur.earned = earned.toFixed(2);
+      return prev + earned;
+    }, 0);
 }
 
 function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   let total = 0;
-  let rest = 20;
+  let rest = BaseCourse[EmployeeTitle.Director];
 
   //团课
   let factor = factors.find((f) => f.id === "GroupCourse")!;
@@ -85,35 +87,116 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   return total;
 }
 
-function CalcFullCourseSalary(course: number) {
-  const exCourse = course - BaseCourse[EmployeeTitle.FullTime];
-  if (course > 100) return exCourse * 120;
-  if (course > 80) return exCourse * 100;
-  if (course > 60) return exCourse * 90;
-  if (course > 40) return exCourse * 80;
-  if (course > 30) return exCourse * 70;
-  if (course > 20) return exCourse * 60;
+function CalcFullCourseSalary(factors: SalaryFactor[]) {
+  const courseCount = factors.reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
+  const price = CalcFullCoursePrice(courseCount);
+
+  let  rest = BaseCourse[EmployeeTitle.FullTime];
+  const total = price * (courseCount - rest);
+
+  //团课
+  let factor = factors.find((f) => f.id === "GroupCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = ((factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = '0.00';
+    }
+  }
+
+  // 小班
+  factor = factors.find((f) => f.id === "SmallCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = ((factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = '0.00';
+    }
+  }
+
+  // 私教
+  factor = factors.find((f) => f.id === "PrivateCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = ((factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = '0.00';
+    }
+  }
+  return total;
+}
+
+function CalcFullCoursePrice(course: number) {
+  if (course > 100) return 120;
+  if (course > 80) return 100;
+  if (course > 60) return 90;
+  if (course > 40) return 80;
+  if (course > 30) return 70;
+  if (course > 20) return 60;
   return 0;
 }
 
-function CalcHalfTimeCourseSalary(course: number): number {
-  const exCourse = course - BaseCourse[EmployeeTitle.HalfTime];
-  if (course > 100) return exCourse * 120 + 30 * 100;
-  if (course > 80) return exCourse * 100 + 30 * 100;
-  if (course > 60) return exCourse * 90 + 30 * 100;
-  if (course > 50) return exCourse * 80 + 30 * 100;
-  if (course > 40) return exCourse * 70 + 30 * 100;
-  if (course > 30) return exCourse * 60 + 30 * 100;
-  return course * 100;
+function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
+  const courseCount = factors.reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
+  const price = CalcHalfTimeCoursePrice(courseCount);
+
+  let  rest = BaseCourse[EmployeeTitle.FullTime];
+  const total = courseCount > rest
+    ? (price * (courseCount - rest) + rest * 100)
+    : (price * courseCount);
+
+  //团课
+  let factor = factors.find((f) => f.id === "GroupCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = (factor.value * 100).toFixed(2);
+    }
+  }
+
+  // 小班
+  factor = factors.find((f) => f.id === "SmallCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = (factor.value * 100).toFixed(2);
+    }
+  }
+
+  // 私教
+  factor = factors.find((f) => f.id === "PrivateCourse")!;
+  if (factor.value > 0) {
+    if (factor.value > rest) {
+      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
+      rest = 0;
+    } else {
+      rest -= factor.value;
+      factor.earned = (factor.value * 100).toFixed(2);
+    }
+  }
+  return total;
 }
 
-export function GetFactorEarned(
-  { id, value }: SalaryFactor,
-  user: UserInfo
-): number {
-  const factor = GetFactorInstance(id, value);
-  if (factor === null) return 0;
-  return factor.GetEarned(user);
+function CalcHalfTimeCoursePrice(course: number): number {
+  if (course > 100) return 120;
+  if (course > 80) return 100;
+  if (course > 60) return 90;
+  if (course > 50) return 80;
+  if (course > 40) return 70;
+  if (course > 30) return 60;
+  return 100;
 }
 
 export function GetFactorInstance(
