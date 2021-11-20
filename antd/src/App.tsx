@@ -8,29 +8,25 @@ const { Option } = Select;
 const initValue = new UserInfo({ employee: "", salary: "3000.00" });
 export const App = () => {
   const [form] = Form.useForm<UserInfo>();
+
   const onFinish = () => {
     const data = form.getFieldsValue();
     const userInfo = new UserInfo(data);
     userInfo.CalcSalary();
     form.setFieldsValue(userInfo);
-    console.log(`${userInfo.employee} 本月应发 ${userInfo.salary}`);
+    // console.log(`${JSON.stringify(userInfo)} 本月应发 ${userInfo.salary}`);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
   const onTitleChanged = (title: EmployeeTitle) => {
     form.setFieldsValue({ title: title, factors: BuildFactors(title) });
   };
   return (
-    <>
       <main>
         <Form
           form={form}
           wrapperCol={{ span: 24 }}
           initialValues={initValue}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           onFieldsChange={onFinish}
           size="middle"
           layout="inline"
@@ -106,6 +102,5 @@ export const App = () => {
           </Form.Item> */}
         </Form>
       </main>
-    </>
   );
 };

@@ -576,7 +576,6 @@ export function BuildFactors(title: EmployeeTitle) {
       ];
     case EmployeeTitle.Civilian:
       return [
-        new OnDuty(0),
         new PerformanceA(0),
         new PerformanceB(0),
         new GroupCourse(0),
@@ -585,6 +584,7 @@ export function BuildFactors(title: EmployeeTitle) {
         new EduTrainCourse(0),
         new LearningSubsidy(0),
         new OtherSubsidy(0),
+        new OnDuty(0),
         new SickLeave(0),
         new LateForWork(0),
         new OtherDeduction(0),
