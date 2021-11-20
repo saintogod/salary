@@ -155,7 +155,7 @@ function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
   const courseCount = factors.reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
   const price = CalcHalfTimeCoursePrice(courseCount);
 
-  let  rest = BaseCourse[EmployeeTitle.FullTime];
+  let  rest = BaseCourse[EmployeeTitle.HalfTime];
   const total = courseCount > rest
     ? (price * (courseCount - rest) + rest * 100)
     : (price * courseCount);
