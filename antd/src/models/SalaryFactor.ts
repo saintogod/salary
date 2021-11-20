@@ -2,6 +2,7 @@ import { BaseSalary, EmployeeTitle, UserInfo } from "./UserInfo";
 
 const WorkDaysPerMonth: number = 26;
 const WorkHoursPerDay: number = 8;
+const CivilianWorkHoursPerDay: number = 5;
 
 export interface SalaryFactor {
   readonly id: string;
@@ -349,7 +350,7 @@ export class SickLeave implements SalaryFactor {
     if (title === EmployeeTitle.PartTime) {
       return 0;
     } else if (title === EmployeeTitle.Civilian) {
-      return -0.3 * 100 * this.value;
+      return -0.3 * 100 * this.value / CivilianWorkHoursPerDay;
     }
     const baseSalary = BaseSalary[title];
     return -0.3 * this.value * (baseSalary / WorkDaysPerMonth / WorkHoursPerDay);
@@ -405,7 +406,7 @@ export class LateForWork implements SalaryFactor {
   public GetEarned({ title }: UserInfo): number {
     if (this.value <= 0) return 0;
     if (title === EmployeeTitle.Civilian) {
-      return this.value * (100 / 5);
+      return this.value * (100 / CivilianWorkHoursPerDay); // 文员每天工作时间 5 小时
     }
     const baseSalary = BaseSalary[title];
     return -this.value * (baseSalary / WorkDaysPerMonth / WorkHoursPerDay);
