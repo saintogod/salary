@@ -403,7 +403,7 @@ export class LateForWork implements SalaryFactor {
 export class Absenteeism implements SalaryFactor {
   public readonly id = "Absenteeism";
   public readonly label: string = "旷工";
-  public readonly unit = "次";
+  public readonly unit = "天";
   public readonly category = "Negative";
 
   public earned: string = '0.00';

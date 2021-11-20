@@ -1,11 +1,11 @@
-import { Form, Input, Button, Select, DatePicker } from "antd";
+import { Form, Input, Select, DatePicker } from "antd";
 
 import "./App.css";
 import { BuildFactors, EmployeeTitle, SalaryFactor, UserInfo } from "./models";
 
 const { Option } = Select;
 
-const initValue = new UserInfo({ employee: "Sang" });
+const initValue = new UserInfo({ employee: "", salary: "3000.00" });
 export const App = () => {
   const [form] = Form.useForm<UserInfo>();
   const onFinish = () => {
@@ -63,7 +63,7 @@ export const App = () => {
                     index
                   ] as SalaryFactor;
                   return (
-                    <div key={key} className="factor-item">
+                    <div key={key} className={`factor-item ${factor.category}`}>
                       <Form.Item
                         name={[name, "value"]}
                         fieldKey={[fieldKey, "value"]}
