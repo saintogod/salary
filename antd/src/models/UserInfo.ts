@@ -60,10 +60,12 @@ export class UserInfo {
       const courseCount = this.factors
         .filter((f) => f.category === "Course")
         .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
-        // 半职老师，仅当 上了超过30节课时，才有基础工资，否刚按
+      // 半职老师，仅当 上了超过30节课时，才有基础工资，否刚按
       if (courseCount > BaseCourse[EmployeeTitle.HalfTime]) {
         salary += BaseSalary[this.title];
       }
+    } else {
+      salary += BaseSalary[this.title];
     }
     salary += this.factors
       .filter((f) => f.category !== "Course")

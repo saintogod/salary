@@ -170,7 +170,7 @@ function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
         rest = 0;
       } else {
         rest -= factor.value;
-        factor.earned = '0.00';
+        factor.earned = "0.00";
       }
     }
 
@@ -182,7 +182,7 @@ function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
         rest = 0;
       } else {
         rest -= factor.value;
-        factor.earned = '0.00';
+        factor.earned = "0.00";
       }
     }
 
@@ -194,7 +194,7 @@ function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
         rest = 0;
       } else {
         rest -= factor.value;
-        factor.earned = '0.00';
+        factor.earned = "0.00";
       }
     }
     return total;
