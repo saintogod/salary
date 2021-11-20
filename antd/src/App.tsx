@@ -35,10 +35,15 @@ export const App = () => {
           size="middle"
           layout="inline"
         >
-          <Form.Item name="employee" style={{ width: "100%" }}>
+          <div className="user-info">
+          <Form.Item name="employee" className="username">
             <Input placeholder="姓名" addonBefore="姓名" />
           </Form.Item>
 
+          <Form.Item name="salary" className="final-salary">
+            <Input prefix="实发薪资" suffix="元" readOnly />
+          </Form.Item>
+</div>
           <div className="base-info">
             <Form.Item name="title" className="base-title">
               <Select onChange={onTitleChanged}>
@@ -96,9 +101,6 @@ export const App = () => {
               计算
             </Button>
           </Form.Item> */}
-          <Form.Item name="salary" className="final-salary">
-            <Input addonBefore="实发薪资" addonAfter="元" readOnly />
-          </Form.Item>
         </Form>
       </main>
     </>

@@ -56,10 +56,13 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   let factor = factors.find((f) => f.id === "GroupCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
-      total += (factor.value - rest) * 70;
+      const earned = (factor.value - rest) * 70;
+      factor.earned = earned.toFixed(2);
+      total += earned;
       rest = 0;
     } else {
       rest -= factor.value;
+      factor.earned = '0.00';
     }
   }
 
@@ -67,10 +70,13 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   factor = factors.find((f) => f.id === "SmallCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
-      total += (factor.value - rest) * 80;
+      const earned = (factor.value - rest) * 80;
+      factor.earned = earned.toFixed(2);
+      total += earned;
       rest = 0;
     } else {
       rest -= factor.value;
+      factor.earned = '0.00';
     }
   }
 
@@ -78,10 +84,13 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
   factor = factors.find((f) => f.id === "PrivateCourse")!;
   if (factor.value > 0) {
     if (factor.value > rest) {
-      total += (factor.value - rest) * 90;
+      const earned = (factor.value - rest) * 90;
+      factor.earned = earned.toFixed(2);
+      total += earned;
       rest = 0;
     } else {
       rest -= factor.value;
+      factor.earned = '0.00';
     }
   }
   return total;

@@ -16,6 +16,28 @@ main {
   margin-bottom: 0.5rem;
 }
 
+.user-info {
+  display: flex;
+  width: 100%;
+}
+.user-info .ant-row.ant-form-item.username {
+  flex: 1 1;
+}
+.user-info .ant-row.ant-form-item.final-salary {
+  margin-right: 0;
+  flex: 0 0 12.5rem;
+}
+.final-salary .ant-input-affix-wrapper {
+  background-color: green;
+}
+#salary {
+  background-color: green;
+  color: yellow;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.125;
+}
+
 .base-info {
   display: flex;
   width: 100%;
@@ -40,14 +62,3 @@ main {
   text-align: right;
 }
 
-.ant-row.ant-form-item.final-salary {
-  margin-right: 0;
-  width: 100%;
-}
-#salary {
-  background-color: green;
-  color: yellow;
-  font-weight: 600;
-  font-size: 1.25rem;
-  line-height: 1.125;
-}
