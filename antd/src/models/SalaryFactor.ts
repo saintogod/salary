@@ -236,7 +236,7 @@ export class EduTrainCourse implements SalaryFactor {
   public readonly id = "EduTrainCourse";
   public readonly label: string = "教培课";
   public readonly unit = "小时";
-  public readonly step: number = 1;
+  public readonly step: number = 0.5;
   public readonly category = "EduCourse";
 
   public earned: string = '0.00';
