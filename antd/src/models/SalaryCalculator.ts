@@ -25,15 +25,11 @@ export function GetCourseSalary(user: UserInfo): number {
   if (title === EmployeeTitle.Salesman) return 0;
 
   if (title === EmployeeTitle.FullTime) {
-    return CalcFullCourseSalary(
-      factors
-        .filter((f) => f.category === "Course")
-    );
+    return CalcFullCourseSalary(factors.filter((f) => f.category === "Course"));
   }
   if (title === EmployeeTitle.HalfTime) {
     return CalcHalfTimeCourseSalary(
-      factors
-        .filter((f) => f.category === "Course")
+      factors.filter((f) => f.category === "Course")
     );
   }
   if (title === EmployeeTitle.Director) {
@@ -62,7 +58,7 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
 
@@ -76,7 +72,7 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
 
@@ -90,17 +86,20 @@ function CalcDirectorCourseSalary(factors: SalaryFactor[]): number {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
   return total;
 }
 
 function CalcFullCourseSalary(factors: SalaryFactor[]) {
-  const courseCount = factors.reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
+  const courseCount = factors.reduce(
+    (prev, cur) => prev + (cur.value > 0 ? cur.value : 0),
+    0
+  );
   const price = CalcFullCoursePrice(courseCount);
 
-  let  rest = BaseCourse[EmployeeTitle.FullTime];
+  let rest = BaseCourse[EmployeeTitle.FullTime];
   const total = price * (courseCount - rest);
 
   //团课
@@ -111,7 +110,7 @@ function CalcFullCourseSalary(factors: SalaryFactor[]) {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
 
@@ -123,7 +122,7 @@ function CalcFullCourseSalary(factors: SalaryFactor[]) {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
 
@@ -135,7 +134,7 @@ function CalcFullCourseSalary(factors: SalaryFactor[]) {
       rest = 0;
     } else {
       rest -= factor.value;
-      factor.earned = '0.00';
+      factor.earned = "0.00";
     }
   }
   return total;
@@ -152,50 +151,85 @@ function CalcFullCoursePrice(course: number) {
 }
 
 function CalcHalfTimeCourseSalary(factors: SalaryFactor[]): number {
-  const courseCount = factors.reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
+  const courseCount = factors.reduce(
+    (prev, cur) => prev + (cur.value > 0 ? cur.value : 0),
+    0
+  );
   const price = CalcHalfTimeCoursePrice(courseCount);
 
-  let  rest = BaseCourse[EmployeeTitle.HalfTime];
-  const total = courseCount > rest
-    ? (price * (courseCount - rest) + rest * 100)
-    : (price * courseCount);
+  let rest = BaseCourse[EmployeeTitle.HalfTime];
+  if (courseCount > rest) {
+    // when over 30 classes, the first 30 class is doesn't have course salary
+    const total = price * (courseCount - rest);
 
-  //团课
-  let factor = factors.find((f) => f.id === "GroupCourse")!;
-  if (factor.value > 0) {
-    if (factor.value > rest) {
-      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
-      rest = 0;
-    } else {
-      rest -= factor.value;
-      factor.earned = (factor.value * 100).toFixed(2);
+    //团课
+    let factor = factors.find((f) => f.id === "GroupCourse")!;
+    if (factor.value > 0) {
+      if (factor.value > rest) {
+        factor.earned = ((factor.value - rest) * price).toFixed(2);
+        rest = 0;
+      } else {
+        rest -= factor.value;
+        factor.earned = '0.00';
+      }
     }
-  }
 
-  // 小班
-  factor = factors.find((f) => f.id === "SmallCourse")!;
-  if (factor.value > 0) {
-    if (factor.value > rest) {
-      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
-      rest = 0;
-    } else {
-      rest -= factor.value;
-      factor.earned = (factor.value * 100).toFixed(2);
+    // 小班
+    factor = factors.find((f) => f.id === "SmallCourse")!;
+    if (factor.value > 0) {
+      if (factor.value > rest) {
+        factor.earned = ((factor.value - rest) * price).toFixed(2);
+        rest = 0;
+      } else {
+        rest -= factor.value;
+        factor.earned = '0.00';
+      }
     }
-  }
 
-  // 私教
-  factor = factors.find((f) => f.id === "PrivateCourse")!;
-  if (factor.value > 0) {
-    if (factor.value > rest) {
-      factor.earned = (rest * 100 + (factor.value - rest) * price).toFixed(2);
-      rest = 0;
-    } else {
-      rest -= factor.value;
-      factor.earned = (factor.value * 100).toFixed(2);
+    // 私教
+    factor = factors.find((f) => f.id === "PrivateCourse")!;
+    if (factor.value > 0) {
+      if (factor.value > rest) {
+        factor.earned = ((factor.value - rest) * price).toFixed(2);
+        rest = 0;
+      } else {
+        rest -= factor.value;
+        factor.earned = '0.00';
+      }
     }
+    return total;
+  } else {
+    const total = price * courseCount;
+
+    //团课
+    let factor = factors.find((f) => f.id === "GroupCourse")!;
+    factor.earned = (factor.value * price).toFixed(2);
+
+    // 小班
+    factor = factors.find((f) => f.id === "SmallCourse")!;
+    if (factor.value > 0) {
+      if (factor.value > rest) {
+        factor.earned = ((factor.value - rest) * price).toFixed(2);
+        rest = 0;
+      } else {
+        rest -= factor.value;
+        factor.earned = (factor.value * 100).toFixed(2);
+      }
+    }
+
+    // 私教
+    factor = factors.find((f) => f.id === "PrivateCourse")!;
+    if (factor.value > 0) {
+      if (factor.value > rest) {
+        factor.earned = ((factor.value - rest) * price).toFixed(2);
+        rest = 0;
+      } else {
+        rest -= factor.value;
+        factor.earned = (factor.value * 100).toFixed(2);
+      }
+    }
+    return total;
   }
-  return total;
 }
 
 function CalcHalfTimeCoursePrice(course: number): number {

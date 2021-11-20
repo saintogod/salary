@@ -56,8 +56,14 @@ export class UserInfo {
     const courseSalary = GetCourseSalary(this);
 
     let salary = courseSalary;
-    if (this.title !== EmployeeTitle.HalfTime || salary >= 3000) {
-      salary += BaseSalary[this.title];
+    if (this.title === EmployeeTitle.HalfTime) {
+      const courseCount = this.factors
+        .filter((f) => f.category === "Course")
+        .reduce((prev, cur) => prev + (cur.value > 0 ? cur.value : 0), 0);
+        // 半职老师，仅当 上了超过30节课时，才有基础工资，否刚按
+      if (courseCount >= BaseCourse[EmployeeTitle.HalfTime]) {
+        salary += BaseSalary[this.title];
+      }
     }
     salary += this.factors
       .filter((f) => f.category !== "Course")
