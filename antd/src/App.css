@@ -25,7 +25,7 @@ main {
 }
 .user-info .ant-row.ant-form-item.final-salary {
   margin-right: 0;
-  flex: 0 0 12.5rem;
+  flex: 0 0 12rem;
 }
 .final-salary .ant-input-affix-wrapper {
   background-color: green;
@@ -36,6 +36,7 @@ main {
   font-weight: 600;
   font-size: 1.25rem;
   line-height: 1.125;
+  text-align: right;
 }
 
 .base-info {

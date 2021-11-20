@@ -7,6 +7,7 @@ export interface SalaryFactor {
   readonly id: string;
   readonly label: string;
   readonly unit: string;
+  readonly step: number;
   readonly category: "Course" | "EduCourse" | "Positive" | "Negative" | "Sales";
   value: number;
   earned: string;
@@ -22,13 +23,14 @@ export class TotalSales implements SalaryFactor {
   public readonly id = "TotalSales";
   public readonly label: string = "业绩";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Sales";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -50,13 +52,14 @@ export class PerformanceA implements SalaryFactor {
   public readonly id = "PerformanceA";
   public readonly label: string = "业绩A";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Sales";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -75,13 +78,14 @@ export class PerformanceB implements SalaryFactor {
   public readonly id = "PerformanceB";
   public readonly label: string = "业绩B";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Sales";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -100,6 +104,7 @@ export class CourseCommission implements SalaryFactor {
   public readonly id = "CourseCommission";
   public readonly label: string = "课程提成";
   public readonly unit = "节";
+  public readonly step: number = 1;
   public readonly category = "Sales";
 
   public earned: string = '0.00';
@@ -127,6 +132,7 @@ export class GroupCourse implements SalaryFactor {
   public readonly id = "GroupCourse";
   public readonly label: string = "团体课";
   public readonly unit = "节";
+  public readonly step: number = 1;
   public readonly category = "Course";
 
   public earned: string = '0.00';
@@ -160,6 +166,7 @@ export class SmallCourse implements SalaryFactor {
   public readonly id = "SmallCourse";
   public readonly label: string = "小班课";
   public readonly unit = "节";
+  public readonly step: number = 1;
   public readonly category = "Course";
 
   public earned: string = '0.00';
@@ -193,6 +200,7 @@ export class PrivateCourse implements SalaryFactor {
   public readonly id = "PrivateCourse";
   public readonly label: string = "私教课";
   public readonly unit = "节";
+  public readonly step: number = 1;
   public readonly category = "Course";
 
   public earned: string = '0.00';
@@ -227,13 +235,14 @@ export class EduTrainCourse implements SalaryFactor {
   public readonly id = "EduTrainCourse";
   public readonly label: string = "教培课";
   public readonly unit = "小时";
+  public readonly step: number = 1;
   public readonly category = "EduCourse";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -251,13 +260,14 @@ export class LearningSubsidy implements SalaryFactor {
   public readonly id = "LearningSubsidy";
   public readonly label: string = "学习补助";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Positive";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -273,13 +283,14 @@ export class OtherSubsidy implements SalaryFactor {
   public readonly id = "OtherSubsidy";
   public readonly label: string = "其它补助";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Positive";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -297,6 +308,7 @@ export class OnDuty implements SalaryFactor {
   public readonly id = "OnDuty";
   public readonly label: string = "到勤";
   public readonly unit = "天";
+  public readonly step: number = 1;
   public readonly category = "Positive";
 
   public earned: string = '0.00';
@@ -320,14 +332,15 @@ export class OnDuty implements SalaryFactor {
 export class SickLeave implements SalaryFactor {
   public readonly id = "SickLeave";
   public readonly label: string = "病假";
-  public readonly unit = "天";
+  public readonly unit = "小时";
+  public readonly step: number = 0.5;
   public readonly category = "Negative";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -339,7 +352,7 @@ export class SickLeave implements SalaryFactor {
       return -0.3 * 100 * this.value;
     }
     const baseSalary = BaseSalary[title];
-    return -0.3 * this.value * (baseSalary / WorkDaysPerMonth);
+    return -0.3 * this.value * (baseSalary / WorkDaysPerMonth / WorkHoursPerDay);
   }
 }
 
@@ -349,14 +362,15 @@ export class SickLeave implements SalaryFactor {
 export class CompassionateLeave implements SalaryFactor {
   public readonly id = "CompassionateLeave";
   public readonly label: string = "事假";
-  public readonly unit = "天";
+  public readonly unit = "小时";
+  public readonly step: number = 0.5;
   public readonly category = "Negative";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -366,7 +380,7 @@ export class CompassionateLeave implements SalaryFactor {
       return 0;
     }
     const baseSalary = BaseSalary[title];
-    return -this.value * (baseSalary / WorkDaysPerMonth);
+    return -this.value * (baseSalary / WorkDaysPerMonth / WorkHoursPerDay);
   }
 }
 
@@ -377,13 +391,14 @@ export class LateForWork implements SalaryFactor {
   public readonly id = "LateForWork";
   public readonly label: string = "迟到";
   public readonly unit = "小时";
+  public readonly step: number = 0.5;
   public readonly category = "Negative";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -403,14 +418,15 @@ export class LateForWork implements SalaryFactor {
 export class Absenteeism implements SalaryFactor {
   public readonly id = "Absenteeism";
   public readonly label: string = "旷工";
-  public readonly unit = "天";
+  public readonly unit = "小时";
+  public readonly step: number = 0.5;
   public readonly category = "Negative";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -420,7 +436,7 @@ export class Absenteeism implements SalaryFactor {
       return 0;
 
     const baseSalary = BaseSalary[title];
-    return -2 * this.value * (baseSalary / WorkDaysPerMonth);
+    return -2 * this.value * (baseSalary / WorkDaysPerMonth / WorkHoursPerDay);
   }
 }
 
@@ -431,13 +447,14 @@ export class OtherDeduction implements SalaryFactor {
   public readonly id = "OtherDeduction";
   public readonly label: string = "其它扣除项";
   public readonly unit = "元";
+  public readonly step: number = 0.1;
   public readonly category = "Negative";
 
   public earned: string = '0.00';
   public value: number;
 
   constructor(value: number | string) {
-    if (typeof value === "string") this.value = parseInt(value, 10);
+    if (typeof value === "string") this.value = parseFloat(value);
     else this.value = value;
   }
 
@@ -452,7 +469,7 @@ export function CreateFactorInstance(
   value: number
 ): SalaryFactor | null {
   if (typeof value === 'string') {
-    value = parseInt(value, 10);
+    value = parseFloat(value);
   }
   if (isNaN(value)) {
     value = 0;

@@ -36,14 +36,14 @@ export const App = () => {
           layout="inline"
         >
           <div className="user-info">
-          <Form.Item name="employee" className="username">
-            <Input placeholder="姓名" addonBefore="姓名" />
-          </Form.Item>
+            <Form.Item name="employee" className="username">
+              <Input placeholder="姓名" addonBefore="姓名" />
+            </Form.Item>
 
-          <Form.Item name="salary" className="final-salary">
-            <Input prefix="实发薪资" suffix="元" readOnly />
-          </Form.Item>
-</div>
+            <Form.Item name="salary" className="final-salary">
+              <Input prefix="实发薪资" suffix="元" readOnly />
+            </Form.Item>
+          </div>
           <div className="base-info">
             <Form.Item name="title" className="base-title">
               <Select onChange={onTitleChanged}>
@@ -80,6 +80,9 @@ export const App = () => {
                           addonBefore={factor.label}
                           suffix={factor.unit}
                           autoComplete="off"
+                          type="number"
+                          step={factor.step}
+                          min={0}
                         />
                       </Form.Item>
                       <Form.Item
