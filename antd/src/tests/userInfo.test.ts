@@ -463,6 +463,169 @@ describe("兼职老师", () => {
     expect(userInfo.salary).toBe("7180.00");
   });
 });
+
+describe("文职人员", () => {
+  test("上10节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 10,
+        },
+        {
+          id: "SmallCourse",
+          value: 0,
+        },
+        {
+          id: "PrivateCourse",
+          value: 0,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("700.00");
+  });
+  test("上20节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 10,
+        },
+        {
+          id: "SmallCourse",
+          value: 5,
+        },
+        {
+          id: "PrivateCourse",
+          value: 5,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("1550.00");
+  });
+
+  test("上31节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 10,
+        },
+        {
+          id: "SmallCourse",
+          value: 10,
+        },
+        {
+          id: "PrivateCourse",
+          value: 11,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("2490.00");
+  });
+
+  test("上40节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 10,
+        },
+        {
+          id: "SmallCourse",
+          value: 10,
+        },
+        {
+          id: "PrivateCourse",
+          value: 20,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("3300.00");
+  });
+
+  test("上60节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 30,
+        },
+        {
+          id: "SmallCourse",
+          value: 10,
+        },
+        {
+          id: "PrivateCourse",
+          value: 20,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("4700.00");
+  });
+
+  test("上81节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 30,
+        },
+        {
+          id: "SmallCourse",
+          value: 30,
+        },
+        {
+          id: "PrivateCourse",
+          value: 21,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("6390.00");
+  });
+
+  test("上101节课时", () => {
+    const userInfo = new UserInfo({
+      employee: "",
+      title: "Civilian",
+      factors: [
+        {
+          id: "GroupCourse",
+          value: 30,
+        },
+        {
+          id: "SmallCourse",
+          value: 30,
+        },
+        {
+          id: "PrivateCourse",
+          value: 41,
+        },
+      ],
+    } as any);
+    userInfo.CalcSalary();
+    expect(userInfo.salary).toBe("8190.00");
+  });
+});
+
 describe("销售人员", () => {
   test("销售额不足5万时，只有基本工资", () => {
     const userInfo = new UserInfo({

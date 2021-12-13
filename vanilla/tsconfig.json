@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ESNext"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/app/*"],
+      "test/*": ["./test/*"]
+    },
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "types": ["jest"]
+  },
+  "compileOnSave": false,
+}

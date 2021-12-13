@@ -152,7 +152,7 @@ export class GroupCourse implements SalaryFactor {
       case EmployeeTitle.PartTime:
         return this.value * 60;
       case EmployeeTitle.Civilian:
-        return this.value * 60;
+        return this.value * 70;
     }
     return 0;
   }
@@ -187,7 +187,7 @@ export class SmallCourse implements SalaryFactor {
       case EmployeeTitle.PartTime:
         return this.value * 70;
       case EmployeeTitle.Civilian:
-        return this.value * 60;
+        return this.value * 80;
     }
     return 0;
   }
@@ -221,7 +221,7 @@ export class PrivateCourse implements SalaryFactor {
       case EmployeeTitle.PartTime:
         return this.value * 80;
       case EmployeeTitle.Civilian:
-        return this.value * 60;
+        return this.value * 90;
     }
     return 0;
   }
